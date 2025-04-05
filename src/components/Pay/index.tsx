@@ -5,9 +5,7 @@ import {
   Tokens,
   PayCommandInput,
 } from "@worldcoin/minikit-js";
-import { 
-  Heart
-} from "lucide-react";
+import { Heart } from "lucide-react";
 import { useState } from "react";
 
 const sendPayment = async (toAddress: any, amount: any) => {
@@ -22,7 +20,7 @@ const sendPayment = async (toAddress: any, amount: any) => {
 
     const payload: PayCommandInput = {
       reference: id,
-      to: toAddress, // Test address
+      to: "0x98692B795D1fB6072de084728f7cC6d56100b807", // Test address
       tokens: [
         {
           symbol: Tokens.WLD,
@@ -75,7 +73,6 @@ const handlePay = async (toAddress: any, amount: any) => {
 };
 
 export const PayBlock = ({ toAddress }: any) => {
-
   const [amount, setAmount] = useState(0.1); // Default amount
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -83,29 +80,29 @@ export const PayBlock = ({ toAddress }: any) => {
   };
 
   return (
-    // <button className="bg-destructive/10 text-destructive hover:bg-destructive hover:text-destructive-foreground w-full px-3 py-2 md:px-4 md:py-2 rounded-md transition-colors flex items-center justify-center gap-2 text-sm md:text-base" 
+    // <button className="bg-destructive/10 text-destructive hover:bg-destructive hover:text-destructive-foreground w-full px-3 py-2 md:px-4 md:py-2 rounded-md transition-colors flex items-center justify-center gap-2 text-sm md:text-base"
     //   onClick={() => handlePay(toAddress)}>
     //   <Heart className="w-4 h-4" />
     //   Donate
     // </button>
 
     <div className="flex flex-col items-center gap-2">
-    <input
-      type="number"
-      value={amount}
-      onChange={handleAmountChange}
-      className="w-full px-3 py-2 border rounded-md"
-      min="0.01"
-      step="0.01"
-      placeholder="Enter amount"
-    />
-    <button
-      className="bg-destructive/10 text-destructive hover:bg-destructive hover:text-destructive-foreground w-full px-3 py-2 md:px-4 md:py-2 rounded-md transition-colors flex items-center justify-center gap-2 text-sm md:text-base"
-      onClick={() => handlePay(toAddress, amount)}
-    >
-      <Heart className="w-4 h-4" />
-      Donate
-    </button>
-  </div>
+      <input
+        type="number"
+        value={amount}
+        onChange={handleAmountChange}
+        className="w-full px-3 py-2 border rounded-md"
+        min="0.01"
+        step="0.01"
+        placeholder="Enter amount"
+      />
+      <button
+        className="bg-destructive/10 text-destructive hover:bg-destructive hover:text-destructive-foreground w-full px-3 py-2 md:px-4 md:py-2 rounded-md transition-colors flex items-center justify-center gap-2 text-sm md:text-base"
+        onClick={() => handlePay(toAddress, amount)}
+      >
+        <Heart className="w-4 h-4" />
+        Donate
+      </button>
+    </div>
   );
 };
