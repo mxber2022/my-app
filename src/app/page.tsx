@@ -10,6 +10,8 @@ import { useWaitForTransactionReceipt } from "@worldcoin/minikit-react";
 import { createPublicClient, http } from "viem";
 import { worldchain } from "@/lib/chains";
 import { TransactionStatus } from "@/components/TransactionStatus";
+import Map from "@/components/Map/Map";
+import { MapProvider } from "@/components/Map/MapContext";
 
 // // This would come from environment variables in a real app
 // const APP_ID =
@@ -106,7 +108,14 @@ export default function Page() {
         {!walletConnected ? (
           <WalletAuthButton onSuccess={handleWalletConnected} />
         ) : (
-          <>hey</>
+          <div className="relative">
+            <div className="absolute -inset-1 bg-gradient-to-r from-destructive/30 via-destructive/20 to-destructive/30 rounded-2xl blur-2xl opacity-50"></div>
+            <div className="relative">
+              <MapProvider>
+                <Map />
+              </MapProvider>
+            </div>
+          </div>
         )}
       </div>
     </div>
