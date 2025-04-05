@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { TuteTimer } from "@/components/TuteTimer";
@@ -11,11 +12,6 @@ import { createPublicClient, http } from "viem";
 import { worldchain } from "@/lib/chains";
 import { TransactionStatus } from "@/components/TransactionStatus";
 
-// // This would come from environment variables in a real app
-// const APP_ID =
-//   process.env.NEXT_PUBLIC_WORLDCOIN_APP_ID ||
-//   "app_9a73963d73efdf2e7d9472593dc9dffd";
-
 export default function Page() {
   const { data: session, status } = useSession();
   const [walletConnected, setWalletConnected] = useState(false);
@@ -25,6 +21,7 @@ export default function Page() {
   const [claimCount, setClaimCount] = useState(0);
   const [transactionId, setTransactionId] = useState<string>("");
   const [isMinting, setIsMinting] = useState(false);
+  const router = useRouter();
 
   // Initialize Viem client
   const client = createPublicClient({
@@ -47,8 +44,9 @@ export default function Page() {
     if (status === "authenticated" && session?.user?.address) {
       setWalletConnected(true);
       console.log("User authenticated:", session.user);
+      router.push("https://metal-token-app.vercel.app/");
     }
-  }, [session, status]);
+  }, [session, status, router]);
 
   // Update UI when transaction is confirmed
   useEffect(() => {
