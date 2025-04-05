@@ -272,7 +272,7 @@ const Map: React.FC = () => {
                     mapContainerStyle={mapContainerStyle}
                     center={center}
                     zoom={12}
-                    onClick={onMapClick}
+                    // onClick={onMapClick}
                     options={mapOptions}
                   >
                     {markers.map((marker, index) => (
