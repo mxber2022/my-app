@@ -1,6 +1,5 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { TuteTimer } from "@/components/TuteTimer";
@@ -11,6 +10,13 @@ import { useWaitForTransactionReceipt } from "@worldcoin/minikit-react";
 import { createPublicClient, http } from "viem";
 import { worldchain } from "@/lib/chains";
 import { TransactionStatus } from "@/components/TransactionStatus";
+import Map from "@/components/Map/Map";
+import { MapProvider } from "@/components/Map/MapContext";
+import { AlertTriangle } from "lucide-react";
+// // This would come from environment variables in a real app
+// const APP_ID =
+//   process.env.NEXT_PUBLIC_WORLDCOIN_APP_ID ||
+//   "app_9a73963d73efdf2e7d9472593dc9dffd";
 
 export default function Page() {
   const { data: session, status } = useSession();
@@ -21,7 +27,6 @@ export default function Page() {
   const [claimCount, setClaimCount] = useState(0);
   const [transactionId, setTransactionId] = useState<string>("");
   const [isMinting, setIsMinting] = useState(false);
-  const router = useRouter();
 
   // Initialize Viem client
   const client = createPublicClient({
@@ -44,9 +49,8 @@ export default function Page() {
     if (status === "authenticated" && session?.user?.address) {
       setWalletConnected(true);
       console.log("User authenticated:", session.user);
-      router.push("https://metal-token-app.vercel.app/");
     }
-  }, [session, status, router]);
+  }, [session, status]);
 
   // Update UI when transaction is confirmed
   useEffect(() => {
@@ -97,52 +101,44 @@ export default function Page() {
   }, [tuteClaimed, timeRemaining]);
 
   return (
-    <div className="flex flex-col h-[100dvh] bg-white safe-area-inset">
+    <div className="flex flex-col h-[100vh] bg-white safe-area-inset">
       {/* Main Content */}
       <div className="flex-1 flex flex-col items-center justify-center px-6 py-8 gap-8">
         <h1 className="text-3xl font-bold text-purple-600">TUTE App</h1>
-
-        {tuteClaimed ? (
-          <TuteTimer timeRemaining={timeRemaining} />
+        {!walletConnected ? (
+          <WalletAuthButton onSuccess={handleWalletConnected} />
         ) : (
           <>
-            <div className="text-center mb-6">
-              <p className="text-lg">
-                {!walletConnected
-                  ? "Connect your wallet to continue"
-                  : !verified
-                  ? "Verify with World ID to claim your TUTE tokens"
-                  : isConfirming || isMinting
-                  ? "Minting your TUTE tokens..."
-                  : "You're all set! Claim your TUTE tokens now"}
-              </p>
-              <p className="text-sm text-gray-500 mt-2">
-                Tokens claimed: {claimCount}
-              </p>
-              <p className="text-xs text-blue-500 mt-1">
-                Wallet:{" "}
-                {session?.user?.address
-                  ? `${session.user.address.substring(
-                      0,
-                      6
-                    )}...${session.user.address.substring(38)}`
-                  : "..."}
-              </p>
+            <div className="min-h-screen bg-background">
+              <div className="container mx-auto p-4 md:px-4 md:py-8">
+                <div className="max-w-3xl mx-auto mb-8 text-center space-y-4">
+                  <div className="inline-flex items-center justify-center gap-2 px-4 py-1.5 rounded-full bg-destructive/10 text-destructive text-sm font-medium mb-2">
+                    <AlertTriangle className="w-4 h-4" />
+                    Emergency Services
+                  </div>
+                  {/* <h1 className="text-3xl md:text-5xl font-bold bg-gradient-to-r from-destructive via-destructive/80 to-destructive/60 text-transparent bg-clip-text">
+            Emergency Map
+          </h1> */}
+                  <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto">
+                    Quickly mark and share emergency locations. Use your current
+                    location to mark emergency spots for immediate assistance.
+                  </p>
 
-              <TransactionStatus
-                isConfirming={isConfirming}
-                isConfirmed={isConfirmed}
-                isMinting={isMinting}
-              />
+                  {/* <button onClick={() => signOut()} className="mt-4 px-4 py-2 bg-red-500 text-white rounded">
+            Sign Out
+          </button> */}
+                </div>
+
+                <div className="relative">
+                  <div className="absolute -inset-1 bg-gradient-to-r from-destructive/30 via-destructive/20 to-destructive/30 rounded-2xl blur-2xl opacity-50"></div>
+                  <div className="relative">
+                    <MapProvider>
+                      <Map />
+                    </MapProvider>
+                  </div>
+                </div>
+              </div>
             </div>
-
-            {!walletConnected ? (
-              <WalletAuthButton onSuccess={handleWalletConnected} />
-            ) : !verified ? (
-              <VerifyButton onVerificationSuccess={handleVerificationSuccess} />
-            ) : (
-              <ClaimButton onSuccess={handleClaimSuccess} />
-            )}
           </>
         )}
       </div>
