@@ -77,8 +77,6 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
-    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
-    "@openzeppelin/contracts": "^5.2.0",
     "@tailwindcss/postcss": "^4",
     "@types/next": "^9.0.0",
     "@types/node": "^20",
@@ -87,7 +85,6 @@
     "autoprefixer": "^10.4.21",
     "eslint": "^9",
     "eslint-config-next": "15.2.4",
-    "hardhat": "^2.22.19",
     "tailwindcss": "^4.0.16",
     "typescript": "^5"
   }
