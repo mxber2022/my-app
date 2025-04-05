@@ -99,55 +99,56 @@ export default function Page() {
   }, [tuteClaimed, timeRemaining]);
 
   return (
-    <div className="flex flex-col h-[100dvh] bg-white safe-area-inset">
-      {/* Main Content */}
-      <div className="flex-1 flex flex-col items-center justify-center px-6 py-8 gap-8">
-        <h1 className="text-3xl font-bold text-purple-600">TUTE App</h1>
+    // <div className="flex flex-col h-[100dvh] bg-white safe-area-inset">
+    //   {/* Main Content */}
+    //   <div className="flex-1 flex flex-col items-center justify-center px-6 py-8 gap-8">
+    //     <h1 className="text-3xl font-bold text-purple-600">TUTE App</h1>
 
-        {tuteClaimed ? (
-          <TuteTimer timeRemaining={timeRemaining} />
-        ) : (
-          <>
-            <div className="text-center mb-6">
-              <p className="text-lg">
-                {!walletConnected
-                  ? "Connect your wallet to continue"
-                  : !verified
-                  ? "Verify with World ID to claim your TUTE tokens"
-                  : isConfirming || isMinting
-                  ? "Minting your TUTE tokens..."
-                  : "You're all set! Claim your TUTE tokens now"}
-              </p>
-              <p className="text-sm text-gray-500 mt-2">
-                Tokens claimed: {claimCount}
-              </p>
-              <p className="text-xs text-blue-500 mt-1">
-                Wallet:{" "}
-                {session?.user?.address
-                  ? `${session.user.address.substring(
-                      0,
-                      6
-                    )}...${session.user.address.substring(38)}`
-                  : "..."}
-              </p>
+    //     {tuteClaimed ? (
+    //       <TuteTimer timeRemaining={timeRemaining} />
+    //     ) : (
+    //       <>
+    //         <div className="text-center mb-6">
+    //           <p className="text-lg">
+    //             {!walletConnected
+    //               ? "Connect your wallet to continue"
+    //               : !verified
+    //               ? "Verify with World ID to claim your TUTE tokens"
+    //               : isConfirming || isMinting
+    //               ? "Minting your TUTE tokens..."
+    //               : "You're all set! Claim your TUTE tokens now"}
+    //           </p>
+    //           <p className="text-sm text-gray-500 mt-2">
+    //             Tokens claimed: {claimCount}
+    //           </p>
+    //           <p className="text-xs text-blue-500 mt-1">
+    //             Wallet:{" "}
+    //             {session?.user?.address
+    //               ? `${session.user.address.substring(
+    //                   0,
+    //                   6
+    //                 )}...${session.user.address.substring(38)}`
+    //               : "..."}
+    //           </p>
 
-              <TransactionStatus
-                isConfirming={isConfirming}
-                isConfirmed={isConfirmed}
-                isMinting={isMinting}
-              />
-            </div>
+    //           <TransactionStatus
+    //             isConfirming={isConfirming}
+    //             isConfirmed={isConfirmed}
+    //             isMinting={isMinting}
+    //           />
+    //         </div>
 
-            {!walletConnected ? (
-              <WalletAuthButton onSuccess={handleWalletConnected} />
-            ) : !verified ? (
-              <VerifyButton onVerificationSuccess={handleVerificationSuccess} />
-            ) : (
-              <ClaimButton onSuccess={handleClaimSuccess} />
-            )}
-          </>
-        )}
-      </div>
-    </div>
+    //         {!walletConnected ? (
+    //           <WalletAuthButton onSuccess={handleWalletConnected} />
+    //         ) : !verified ? (
+    //           <VerifyButton onVerificationSuccess={handleVerificationSuccess} />
+    //         ) : (
+    //           <ClaimButton onSuccess={handleClaimSuccess} />
+    //         )}
+    //       </>
+    //     )}
+    //   </div>
+    // </div>
+    <>hello</>
   );
 }
