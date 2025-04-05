@@ -5,6 +5,7 @@ import { SessionProvider } from "@/providers/session-provider";
 import MiniKitProvider from "@/providers/minikit-provider";
 import { ErudaProvider } from "@/providers/eruda-provider";
 import "./globals.css";
+import GoogleMapsWrapper from '@/components/GoogleMapsWrapper';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,11 +24,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
+      <GoogleMapsWrapper>
         <ErudaProvider>
           <SessionProvider>
             <MiniKitProvider>{children}</MiniKitProvider>
           </SessionProvider>
         </ErudaProvider>
+        </GoogleMapsWrapper>
       </body>
     </html>
   );
