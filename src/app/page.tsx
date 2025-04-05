@@ -103,7 +103,7 @@ export default function Page() {
   return (
     <div className="flex flex-col h-[100vh] bg-white safe-area-inset">
       {/* Main Content */}
-      <div className="flex-1 flex flex-col items-center justify-center px-6 py-8 gap-8">
+      <div className="flex-1 flex flex-col items-center justify-center px-0 py-8 gap-8">
         {!walletConnected ? (
           <WalletAuthButton onSuccess={handleWalletConnected} />
         ) : (
