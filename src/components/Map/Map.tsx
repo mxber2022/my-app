@@ -5,15 +5,15 @@ import {
   GoogleMap,
   Marker,
   InfoWindow,
-  LoadScript
+  LoadScript,
 } from "@react-google-maps/api";
 import axios from "axios";
-import { 
-  Loader2, 
-  MapPin, 
-  Navigation, 
-  MessageSquare, 
-  X, 
+import {
+  Loader2,
+  MapPin,
+  Navigation,
+  MessageSquare,
+  X,
   AlertTriangle,
   Heart,
   MessagesSquare,
@@ -23,7 +23,7 @@ import {
   Info,
   AlertOctagon,
   Map as MapIcon,
-  BarChart
+  BarChart,
 } from "lucide-react";
 import PushChat from "../PushChat/PushChat";
 import { useMap } from "./MapContext";
@@ -31,7 +31,6 @@ import { Toaster } from "sonner";
 import { EmergencyForm, EmergencyInfo } from "./EmergencyForm";
 import LocationStats from "./LocationStats";
 import { useSession } from "next-auth/react";
-
 
 interface MarkerData {
   walletAddress: string;
@@ -66,15 +65,15 @@ const mapOptions = {
 import { PayBlock } from "../Pay";
 
 const Map: React.FC = () => {
-    const { 
-        isLoading, 
-        setIsLoading, 
-        showError, 
-        showSuccess,
-        locations: markers,
-        addLocation 
-      } = useMap();
-  const [activeTab, setActiveTab] = useState<'map' | 'stats'>('map');
+  const {
+    isLoading,
+    setIsLoading,
+    showError,
+    showSuccess,
+    locations: markers,
+    addLocation,
+  } = useMap();
+  const [activeTab, setActiveTab] = useState<"map" | "stats">("map");
   //const { isLoading, setIsLoading, showError, showSuccess } = useMap();
   //const [markers, setMarkers] = useState<MarkerData[]>([]);
   const [selectedMarker, setSelectedMarker] = useState<MarkerData | null>(null);
@@ -87,32 +86,34 @@ const Map: React.FC = () => {
   const [showChat, setShowChat] = useState<boolean>(false);
   const [showGlobalChat, setShowGlobalChat] = useState<boolean>(false);
   const [showEmergencyForm, setShowEmergencyForm] = useState<boolean>(false);
-  const [pendingLocation, setPendingLocation] = useState<{lat: number, lng: number} | null>(null);
-  
+  const [pendingLocation, setPendingLocation] = useState<{
+    lat: number;
+    lng: number;
+  } | null>(null);
 
   const { data: session } = useSession();
   // Temporary wallet address for demo
-  const walletAddress = session?.user?.name
-  const address = walletAddress; 
+  const walletAddress = session?.user?.address;
+  const address = walletAddress;
   console.log("walletAddress: ", address);
 
-//   const fetchLocations = async () => {
-//     setIsLoading(true);
-//     try {
-//       const response = await axios.get<MarkerData[]>(
-//         "https://emergencybackend-g9scdbasl-mxber2022s-projects.vercel.app/api/locations"
-//       );
-//       setMarkers(response.data);
-//     } catch (error) {
-//       showError("Failed to fetch locations. Please try again later.");
-//     } finally {
-//       setIsLoading(false);
-//     }
-//   };
+  //   const fetchLocations = async () => {
+  //     setIsLoading(true);
+  //     try {
+  //       const response = await axios.get<MarkerData[]>(
+  //         "https://emergencybackend-g9scdbasl-mxber2022s-projects.vercel.app/api/locations"
+  //       );
+  //       setMarkers(response.data);
+  //     } catch (error) {
+  //       showError("Failed to fetch locations. Please try again later.");
+  //     } finally {
+  //       setIsLoading(false);
+  //     }
+  //   };
 
-//   useEffect(() => {
-//     fetchLocations();
-//   }, []);
+  //   useEffect(() => {
+  //     fetchLocations();
+  //   }, []);
 
   const getUserLocation = () => {
     if (navigator.geolocation) {
@@ -154,14 +155,14 @@ const Map: React.FC = () => {
       walletAddress: address,
       lat: pendingLocation.lat,
       lng: pendingLocation.lng,
-      emergencyInfo
+      emergencyInfo,
     };
 
     try {
-    //   await axios.post(
-    //     "https://emergencybackend-g9scdbasl-mxber2022s-projects.vercel.app/api/locations",
-    //     newMarker
-    //   );
+      //   await axios.post(
+      //     "https://emergencybackend-g9scdbasl-mxber2022s-projects.vercel.app/api/locations",
+      //     newMarker
+      //   );
       addLocation(newMarker);
       setMarkerPlaced(true);
       setMarkerPlaced(true);
@@ -198,33 +199,35 @@ const Map: React.FC = () => {
   };
 
   const handleDonate = () => {
-    showSuccess("Thank you for your willingness to donate! This feature is coming soon.");
+    showSuccess(
+      "Thank you for your willingness to donate! This feature is coming soon."
+    );
   };
 
   const getSeverityColor = (severity?: string) => {
     switch (severity) {
-      case 'critical':
-        return 'text-red-600 bg-red-50';
-      case 'high':
-        return 'text-orange-500 bg-orange-50';
-      case 'medium':
-        return 'text-yellow-600 bg-yellow-50';
-      case 'low':
-        return 'text-green-600 bg-green-50';
+      case "critical":
+        return "text-red-600 bg-red-50";
+      case "high":
+        return "text-orange-500 bg-orange-50";
+      case "medium":
+        return "text-yellow-600 bg-yellow-50";
+      case "low":
+        return "text-green-600 bg-green-50";
       default:
-        return 'text-muted-foreground bg-muted';
+        return "text-muted-foreground bg-muted";
     }
   };
 
   const getSeverityIcon = (severity?: string) => {
     switch (severity) {
-      case 'critical':
+      case "critical":
         return <AlertOctagon className="w-4 h-4" />;
-      case 'high':
+      case "high":
         return <AlertTriangle className="w-4 h-4" />;
-      case 'medium':
+      case "medium":
         return <AlertCircle className="w-4 h-4" />;
-      case 'low':
+      case "low":
         return <Info className="w-4 h-4" />;
       default:
         return <AlertCircle className="w-4 h-4" />;
@@ -236,22 +239,22 @@ const Map: React.FC = () => {
       <div className="w-full">
         <div className="w-full md:w-auto grid grid-cols-2 gap-1 p-1 bg-muted/50 rounded-lg">
           <button
-            onClick={() => setActiveTab('map')}
+            onClick={() => setActiveTab("map")}
             className={`flex items-center justify-center gap-2 px-4 py-2.5 rounded-md text-sm font-medium transition-colors ${
-              activeTab === 'map'
-                ? 'bg-background text-foreground shadow-sm'
-                : 'text-muted-foreground hover:bg-muted/80'
+              activeTab === "map"
+                ? "bg-background text-foreground shadow-sm"
+                : "text-muted-foreground hover:bg-muted/80"
             }`}
           >
             <MapIcon className="w-4 h-4" />
             Emergency Map
           </button>
           <button
-            onClick={() => setActiveTab('stats')}
+            onClick={() => setActiveTab("stats")}
             className={`flex items-center justify-center gap-2 px-4 py-2.5 rounded-md text-sm font-medium transition-colors ${
-              activeTab === 'stats'
-                ? 'bg-background text-foreground shadow-sm'
-                : 'text-muted-foreground hover:bg-muted/80'
+              activeTab === "stats"
+                ? "bg-background text-foreground shadow-sm"
+                : "text-muted-foreground hover:bg-muted/80"
             }`}
           >
             <BarChart className="w-4 h-4" />
@@ -260,7 +263,7 @@ const Map: React.FC = () => {
         </div>
 
         <div className="mt-4">
-          {activeTab === 'map' && (
+          {activeTab === "map" && (
             <div className="space-y-4">
               <div className="bg-card rounded-2xl shadow-lg overflow-hidden border">
                 <div className="relative">
@@ -286,51 +289,81 @@ const Map: React.FC = () => {
 
                     {selectedMarker && (
                       <InfoWindow
-                        position={{ lat: selectedMarker.lat, lng: selectedMarker.lng }}
+                        position={{
+                          lat: selectedMarker.lat,
+                          lng: selectedMarker.lng,
+                        }}
                         onCloseClick={() => setSelectedMarker(null)}
                       >
                         <div className="p-4 min-w-[320px] max-w-md">
-                        {selectedMarker.emergencyInfo && (
-                      <div className="mb-4 space-y-2">
-                        <div className="flex items-center gap-2">
-                          <span className="font-medium text-sm">Type:</span>
-                          <span className="text-sm">{selectedMarker.emergencyInfo.type}</span>
-                        </div>
-                        <div>
-                          <span className="font-medium text-sm">Description:</span>
-                          <p className="text-sm mt-1">{selectedMarker.emergencyInfo.description}</p>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <span className="font-medium text-sm">Severity:</span>
-                          <span className={`text-sm ${getSeverityColor(selectedMarker.emergencyInfo.severity)}`}>
-                            {selectedMarker.emergencyInfo.severity.charAt(0).toUpperCase() + selectedMarker.emergencyInfo.severity.slice(1)}
-                          </span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <span className="font-medium text-sm">People Affected:</span>
-                          <span className="text-sm">{selectedMarker.emergencyInfo.peopleAffected}</span>
-                        </div>
-                        <div>
-                          <span className="font-medium text-sm">Contact:</span>
-                          <p className="text-sm mt-1">{selectedMarker.emergencyInfo.contactInfo}</p>
-                        </div>
-                      </div>
-                    )}
+                          {selectedMarker.emergencyInfo && (
+                            <div className="mb-4 space-y-2">
+                              <div className="flex items-center gap-2">
+                                <span className="font-medium text-sm">
+                                  Type:
+                                </span>
+                                <span className="text-sm">
+                                  {selectedMarker.emergencyInfo.type}
+                                </span>
+                              </div>
+                              <div>
+                                <span className="font-medium text-sm">
+                                  Description:
+                                </span>
+                                <p className="text-sm mt-1">
+                                  {selectedMarker.emergencyInfo.description}
+                                </p>
+                              </div>
+                              <div className="flex items-center gap-2">
+                                <span className="font-medium text-sm">
+                                  Severity:
+                                </span>
+                                <span
+                                  className={`text-sm ${getSeverityColor(
+                                    selectedMarker.emergencyInfo.severity
+                                  )}`}
+                                >
+                                  {selectedMarker.emergencyInfo.severity
+                                    .charAt(0)
+                                    .toUpperCase() +
+                                    selectedMarker.emergencyInfo.severity.slice(
+                                      1
+                                    )}
+                                </span>
+                              </div>
+                              <div className="flex items-center gap-2">
+                                <span className="font-medium text-sm">
+                                  People Affected:
+                                </span>
+                                <span className="text-sm">
+                                  {selectedMarker.emergencyInfo.peopleAffected}
+                                </span>
+                              </div>
+                              <div>
+                                <span className="font-medium text-sm">
+                                  Contact:
+                                </span>
+                                <p className="text-sm mt-1">
+                                  {selectedMarker.emergencyInfo.contactInfo}
+                                </p>
+                              </div>
+                            </div>
+                          )}
 
-                    <p className="text-xs md:text-sm mb-3 md:mb-4 font-mono bg-muted px-2 py-1 rounded">
-                      {selectedMarker.walletAddress.slice(0, 6)}...
-                      {selectedMarker.walletAddress.slice(-4)}
-                    </p>
-                    
-                    <div className="space-y-2">
-                      <button
-                        onClick={() => setShowChat(true)}
-                        className="bg-primary text-primary-foreground w-full px-3 py-2 md:px-4 md:py-2 rounded-md hover:bg-primary/90 transition-colors flex items-center justify-center gap-2 text-sm md:text-base"
-                      >
-                        <MessageSquare className="w-4 h-4" />
-                        Start Chat
-                      </button>
-                      {/* <button
+                          <p className="text-xs md:text-sm mb-3 md:mb-4 font-mono bg-muted px-2 py-1 rounded">
+                            {selectedMarker.walletAddress.slice(0, 6)}...
+                            {selectedMarker.walletAddress.slice(-4)}
+                          </p>
+
+                          <div className="space-y-2">
+                            <button
+                              onClick={() => setShowChat(true)}
+                              className="bg-primary text-primary-foreground w-full px-3 py-2 md:px-4 md:py-2 rounded-md hover:bg-primary/90 transition-colors flex items-center justify-center gap-2 text-sm md:text-base"
+                            >
+                              <MessageSquare className="w-4 h-4" />
+                              Start Chat
+                            </button>
+                            {/* <button
                         onClick={handleDonate}
                         className="bg-destructive/10 text-destructive hover:bg-destructive hover:text-destructive-foreground w-full px-3 py-2 md:px-4 md:py-2 rounded-md transition-colors flex items-center justify-center gap-2 text-sm md:text-base"
                       >
@@ -339,15 +372,17 @@ const Map: React.FC = () => {
 
                       </button> */}
 
-<PayBlock toAddress={selectedMarker.walletAddress} />
-                    </div>
-                  </div>
-                </InfoWindow>
-              )}
-            </GoogleMap>
-          {/* </LoadScript> */}
-        </div>
-      </div>
+                            <PayBlock
+                              toAddress={selectedMarker.walletAddress}
+                            />
+                          </div>
+                        </div>
+                      </InfoWindow>
+                    )}
+                  </GoogleMap>
+                  {/* </LoadScript> */}
+                </div>
+              </div>
 
               <div className="flex flex-col md:flex-row items-center justify-center gap-3 md:gap-4 p-4 md:p-6 bg-card rounded-2xl shadow-sm border">
                 <button
@@ -385,9 +420,7 @@ const Map: React.FC = () => {
             </div>
           )}
 
-          {activeTab === 'stats' && (
-            <LocationStats markers={markers} />
-          )}
+          {activeTab === "stats" && <LocationStats markers={markers} />}
         </div>
       </div>
 
@@ -402,20 +435,20 @@ const Map: React.FC = () => {
         />
       )}
 
-      {(showChat && selectedMarker) && (
-        <PushChat 
-          selectedAddress={selectedMarker.walletAddress} 
+      {showChat && selectedMarker && (
+        <PushChat
+          selectedAddress={selectedMarker.walletAddress}
           onClose={() => setShowChat(false)}
         />
       )}
 
       {showGlobalChat && (
-        <PushChat 
+        <PushChat
           selectedAddress="Global Chat"
           onClose={() => setShowGlobalChat(false)}
         />
       )}
-      
+
       <Toaster position="bottom-right" />
     </div>
   );
